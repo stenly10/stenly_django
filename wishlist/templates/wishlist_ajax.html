@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+      $.get("{% url 'wishlist:show_json' %}", function(data, status) {
+        $("tabel").text("halo");
+      });
+    });
+  });
+</script>
+{% endblock meta %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">{{nama}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'wishlist:logout' %}">Logout</a>
+        </ul>
+      </div>
+</nav>
+<div id="tabel">
+<table>
+    <tr>
+        <th>Nama Barang</th>
+        <th>Harga Barang</th>
+        <th>Deskripsi</th>
+    </tr>
+    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+    {% for barang in list_barang %}
+    <tr>
+        <th>{{barang.nama_barang}}</th>
+        <th>{{barang.harga_barang}}</th>
+        <th>{{barang.deskripsi}}</th>
+    </tr>
+{% endfor %}
+</table>
+</div>
+<button>get data</button>
+
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+
+{% endblock content %}
